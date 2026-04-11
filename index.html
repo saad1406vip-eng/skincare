@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="روتين سعد">
+<meta name="theme-color" content="#F5F0E8">
+<title>روتين سعد الكامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --bg: #F5F0E8;
+  --surface: #FFFFFF;
+  --surface2: #EDE8DF;
+  --text: #1A1612;
+  --text2: #5A5248;
+  --text3: #9A9088;
+  --accent: #8B6914;
+  --accent-bg: #F0E4C0;
+  --border: #DDD6CB;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --radius: 16px;
+
+  /* Category colors */
+  --am-c: #C47A2A;   --am-bg: #FEF3E2;
+  --pm-c: #2A5F8B;   --pm-bg: #E2EFF8;
+  --wk-c: #2A7A5A;   --wk-bg: #E2F4EC;
+  --body-c: #6B3FA0; --body-bg: #F0EAF8;
+  --hair-c: #8B3A3A; --hair-bg: #F8EAEA;
+  --sup-c: #2A6B5A;  --sup-bg: #E2F4EE;
+  --mon-c: #5A3A8B;  --mon-bg: #EEE8F8;
+  --fri-c: #8B5A2A;  --fri-bg: #F8F0E2;
+}
+
+html,body { height:100%; font-family:'Tajawal',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+
+/* HEADER */
+.header {
+  background:var(--surface);
+  padding:50px 16px 0;
+  border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.header-top { display:flex; align-items:center; gap:12px; padding-bottom:12px; }
+.header-icon { width:42px; height:42px; border-radius:12px; background:var(--accent-bg); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.header-title { font-size:20px; font-weight:800; color:var(--text); }
+.header-sub { font-size:12px; color:var(--text3); margin-top:1px; }
+
+/* DAY INDICATOR */
+.day-bar {
+  display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;
+  padding:0 0 12px;
+}
+.day-bar::-webkit-scrollbar { display:none; }
+.day-pill {
+  flex-shrink:0; padding:6px 14px; border-radius:50px;
+  border:1.5px solid var(--border);
+  font-family:'Tajawal',sans-serif; font-size:13px; font-weight:600;
+  cursor:pointer; background:transparent; color:var(--text3);
+  transition:all 0.2s;
+}
+.day-pill.active { background:var(--accent-bg); color:var(--accent); border-color:rgba(139,105,20,0.3); }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0;
+  background:var(--surface); border-top:1px solid var(--border);
+  display:flex; padding:6px 4px 20px; gap:2px; z-index:100;
+  box-shadow:0 -2px 16px rgba(0,0,0,0.07);
+}
+.nav-btn {
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:8px 2px; border-radius:12px; border:none;
+  background:transparent; cursor:pointer;
+  font-family:'Tajawal',sans-serif; transition:all 0.2s;
+}
+.nav-btn.active { background:var(--accent-bg); }
+.nav-icon { font-size:18px; }
+.nav-label { font-size:10px; font-weight:600; color:var(--text3); }
+.nav-btn.active .nav-label { color:var(--accent); }
+
+/* CONTENT */
+.content { padding:16px 16px 110px; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* PROGRESS */
+.prog-wrap { margin-bottom:16px; }
+.prog-top { display:flex; justify-content:space-between; font-size:12px; color:var(--text3); margin-bottom:5px; }
+.prog-bar { height:5px; background:var(--surface2); border-radius:10px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:10px; transition:width 0.4s ease; background:linear-gradient(90deg,var(--am-c),#E8A84C); }
+
+/* SECTION HEADER */
+.sec-hdr {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px; border-radius:var(--radius);
+  margin-bottom:10px; margin-top:4px;
+}
+.sec-hdr-icon { font-size:20px; }
+.sec-hdr-title { font-size:15px; font-weight:800; }
+.sec-hdr-time { font-size:11px; font-weight:500; color:var(--text3); margin-top:1px; }
+
+.sec-hdr.am { background:var(--am-bg); }
+.sec-hdr.am .sec-hdr-title { color:var(--am-c); }
+.sec-hdr.pm { background:var(--pm-bg); }
+.sec-hdr.pm .sec-hdr-title { color:var(--pm-c); }
+.sec-hdr.wk { background:var(--wk-bg); }
+.sec-hdr.wk .sec-hdr-title { color:var(--wk-c); }
+.sec-hdr.body { background:var(--body-bg); }
+.sec-hdr.body .sec-hdr-title { color:var(--body-c); }
+.sec-hdr.hair { background:var(--hair-bg); }
+.sec-hdr.hair .sec-hdr-title { color:var(--hair-c); }
+.sec-hdr.mon { background:var(--mon-bg); }
+.sec-hdr.mon .sec-hdr-title { color:var(--mon-c); }
+.sec-hdr.fri { background:var(--fri-bg); }
+.sec-hdr.fri .sec-hdr-title { color:var(--fri-c); }
+.sec-hdr.sup { background:var(--sup-bg); }
+.sec-hdr.sup .sec-hdr-title { color:var(--sup-c); }
+
+/* STEP CARD */
+.step {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px;
+  margin-bottom:8px; display:flex; gap:12px; align-items:flex-start;
+  box-shadow:var(--shadow); cursor:pointer; transition:opacity 0.2s;
+}
+.step.done { opacity:0.4; }
+.step.done .step-title { text-decoration:line-through; }
+
+.step-num {
+  width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; flex-shrink:0; margin-top:2px;
+}
+.step.am .step-num { background:var(--am-bg); color:var(--am-c); }
+.step.pm .step-num { background:var(--pm-bg); color:var(--pm-c); }
+.step.wk .step-num { background:var(--wk-bg); color:var(--wk-c); }
+.step.body .step-num { background:var(--body-bg); color:var(--body-c); }
+.step.hair .step-num { background:var(--hair-bg); color:var(--hair-c); }
+.step.mon .step-num { background:var(--mon-bg); color:var(--mon-c); }
+.step.fri .step-num { background:var(--fri-bg); color:var(--fri-c); }
+
+.step-body { flex:1; min-width:0; }
+.step-tag {
+  font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px;
+  display:inline-block; margin-bottom:5px;
+}
+.step.am .step-tag { background:var(--am-bg); color:var(--am-c); }
+.step.pm .step-tag { background:var(--pm-bg); color:var(--pm-c); }
+.step.wk .step-tag { background:var(--wk-bg); color:var(--wk-c); }
+.step.body .step-tag { background:var(--body-bg); color:var(--body-c); }
+.step.hair .step-tag { background:var(--hair-bg); color:var(--hair-c); }
+.step.mon .step-tag { background:var(--mon-bg); color:var(--mon-c); }
+.step.fri .step-tag { background:var(--fri-bg); color:var(--fri-c); }
+
+.step-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:2px; }
+.step-product { font-size:13px; font-weight:600; color:var(--accent); margin-bottom:5px; }
+.step-desc { font-size:13px; color:var(--text2); line-height:1.7; }
+
+.check-circle {
+  width:22px; height:22px; border-radius:50%; border:2px solid var(--border);
+  flex-shrink:0; margin-top:4px; display:flex; align-items:center;
+  justify-content:center; transition:all 0.2s;
+}
+.step.am .check-circle { border-color:var(--am-c); }
+.step.pm .check-circle { border-color:var(--pm-c); }
+.step.wk .check-circle { border-color:var(--wk-c); }
+.step.body .check-circle { border-color:var(--body-c); }
+.step.hair .check-circle { border-color:var(--hair-c); }
+.step.mon .check-circle { border-color:var(--mon-c); }
+.step.fri .check-circle { border-color:var(--fri-c); }
+.step.done .check-circle { background:var(--text3); border-color:var(--text3); }
+.check-tick { font-size:12px; color:white; display:none; }
+.step.done .check-tick { display:block; }
+
+.divider { height:1px; background:var(--border); margin:18px 0; }
+.sec-label { font-size:11px; font-weight:700; color:var(--text3); letter-spacing:0.5px; margin-bottom:10px; padding-right:2px; }
+
+/* PRODUCT CARD */
+.prod-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px;
+  margin-bottom:8px; display:flex; gap:12px; align-items:flex-start;
+  box-shadow:var(--shadow);
+}
+.prod-icon { width:42px; height:42px; border-radius:11px; background:var(--accent-bg); display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
+.prod-body { flex:1; }
+.prod-name { font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
+.prod-brand { font-size:12px; font-weight:600; color:var(--accent); margin-bottom:4px; }
+.prod-note { font-size:12px; color:var(--text2); line-height:1.65; }
+.prod-price { font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; background:var(--surface2); color:var(--text2); white-space:nowrap; flex-shrink:0; height:fit-content; }
+
+/* SUPPLEMENT CARD */
+.sup-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px; margin-bottom:8px;
+  box-shadow:var(--shadow);
+}
+.sup-head { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.sup-emoji { font-size:24px; }
+.sup-name { font-size:15px; font-weight:700; color:var(--text); }
+.sup-dose { font-size:11px; color:var(--sup-c); font-weight:600; margin-top:1px; }
+.sup-why { font-size:13px; color:var(--text2); line-height:1.7; }
+
+/* TIP BOX */
+.tip { background:var(--am-bg); border:1px solid rgba(196,122,42,0.2); border-radius:var(--radius); padding:13px 14px; margin-top:10px; }
+.tip-title { font-size:13px; font-weight:700; color:var(--am-c); margin-bottom:8px; }
+.tip-row { display:flex; align-items:flex-start; gap:8px; margin-bottom:6px; font-size:13px; color:var(--text2); line-height:1.6; }
+.tip-row:last-child { margin-bottom:0; }
+.tip-dot { width:5px; height:5px; border-radius:50%; background:var(--am-c); flex-shrink:0; margin-top:7px; }
+
+.warn { background:#FEF2F2; border:1px solid rgba(200,80,80,0.2); border-radius:var(--radius); padding:13px 14px; margin-top:10px; font-size:13px; color:#8B2020; line-height:1.7; }
+.info { background:var(--body-bg); border:1px solid rgba(107,63,160,0.15); border-radius:var(--radius); padding:13px 14px; margin-top:10px; font-size:13px; color:var(--body-c); line-height:1.7; }
+
+/* TIMELINE */
+.tl-item { display:flex; gap:12px; padding-bottom:18px; position:relative; }
+.tl-item:last-child { padding-bottom:0; }
+.tl-item::after { content:''; position:absolute; right:19px; top:42px; width:1.5px; height:calc(100% - 26px); background:var(--border); }
+.tl-item:last-child::after { display:none; }
+.tl-dot { width:38px; height:38px; border-radius:50%; background:var(--accent-bg); border:2px solid rgba(139,105,20,0.25); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.tl-week { font-size:11px; font-weight:700; color:var(--accent); margin-bottom:2px; }
+.tl-title { font-size:14px; font-weight:700; margin-bottom:3px; }
+.tl-desc { font-size:13px; color:var(--text2); line-height:1.7; }
+
+/* COST TABLE */
+.cost-tbl { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.cost-row { display:flex; justify-content:space-between; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border); }
+.cost-row:last-child { border-bottom:none; }
+.cost-lbl { font-size:13px; color:var(--text2); }
+.cost-val { font-size:13px; font-weight:700; color:var(--accent); }
+.cost-row.total .cost-lbl { font-size:15px; font-weight:800; color:var(--text); }
+.cost-row.total .cost-val { font-size:15px; font-weight:800; }
+
+/* WEEK OVERVIEW */
+.week-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+.wday-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px; cursor:pointer;
+  transition:all 0.15s; box-shadow:var(--shadow);
+}
+.wday-card.special { border-color:rgba(107,63,160,0.3); background:linear-gradient(135deg,var(--surface) 0%,rgba(107,63,160,0.04) 100%); }
+.wday-name { font-size:15px; font-weight:800; margin-bottom:3px; }
+.wday-steps { font-size:12px; color:var(--text3); }
+.wday-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+.wday-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; }
+.tag-face { background:var(--am-bg); color:var(--am-c); }
+.tag-body { background:var(--body-bg); color:var(--body-c); }
+.tag-hair { background:var(--hair-bg); color:var(--hair-c); }
+.tag-special { background:var(--mon-bg); color:var(--mon-c); }
+.tag-fri { background:var(--fri-bg); color:var(--fri-c); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-icon">✨</div>
+    <div>
+      <div class="header-title">روتين سعد الكامل</div>
+      <div class="header-sub">وجه • جسم • شعر • مكملات — ٤٠ سنة</div>
+    </div>
+  </div>
+  <!-- Day pills -->
+  <div class="day-bar" id="dayBar">
+    <button class="day-pill" onclick="setDay('sun',this)">الأحد</button>
+    <button class="day-pill" onclick="setDay('mon',this)">الاثنين ✂️</button>
+    <button class="day-pill" onclick="setDay('tue',this)">الثلاثاء</button>
+    <button class="day-pill" onclick="setDay('wed',this)">الأربعاء</button>
+    <button class="day-pill" onclick="setDay('thu',this)">الخميس</button>
+    <button class="day-pill" onclick="setDay('fri',this)">الجمعة 🚿</button>
+    <button class="day-pill" onclick="setDay('sat',this)">السبت</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ======================== PAGE: TODAY ======================== -->
+  <div class="page active" id="pg-today">
+
+    <div class="prog-wrap">
+      <div class="prog-top">
+        <span>إنجاز اليوم</span>
+        <span id="prog-txt">٠ خطوة</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+
+    <div id="routine-content"></div>
+
+  </div>
+
+  <!-- ======================== PAGE: PRODUCTS ======================== -->
+  <div class="page" id="pg-products">
+
+    <div class="sec-label">الوجه — الصباح</div>
+    <div class="prod-card"><div class="prod-icon">🫧</div><div class="prod-body"><div class="prod-name">غسول رغوي</div><div class="prod-brand">CeraVe Foaming Facial Cleanser</div><div class="prod-note">بدون صابون. Ceramides + Niacinamide. الأفضل للدهنية المختلطة.</div></div><div class="prod-price">٤٠-٦٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">💧</div><div class="prod-body"><div class="prod-name">تونر Glow</div><div class="prod-brand">Pixi Glow Tonic 5% Glycolic</div><div class="prod-note">يضيق المسام ويقشر لطيفاً. آمن صباحاً.</div></div><div class="prod-price">٥٠-٧٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">✨</div><div class="prod-body"><div class="prod-name">سيروم فيتامين C ⭐</div><div class="prod-brand">L'Oréal Revitalift 12% Vitamin C</div><div class="prod-note">الأهم في الخطة. يوحد اللون ويضيء. أفضل نسبة جودة/سعر.</div></div><div class="prod-price">٨٠-١٢٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">💦</div><div class="prod-body"><div class="prod-name">مرطب جل نهاري</div><div class="prod-brand">Neutrogena Hydro Boost Water Gel</div><div class="prod-note">هيالورونيك خالص. خفيف، لا دهونة.</div></div><div class="prod-price">٥٠-٧٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🛡️</div><div class="prod-body"><div class="prod-name">واقي شمس SPF50+</div><div class="prod-brand">La Roche-Posay Anthelios UVMune 400</div><div class="prod-note">حتى داخل المختبر. يحمي كل عمل فيتامين C.</div></div><div class="prod-price">١٣٠-١٨٠ ر</div></div>
+
+    <div class="divider"></div>
+    <div class="sec-label">الوجه — المساء</div>
+    <div class="prod-card"><div class="prod-icon">🌸</div><div class="prod-body"><div class="prod-name">بالم التنظيف</div><div class="prod-brand">Banila Co Clean It Zero</div><div class="prod-note">المرحلة الأولى لتنظيف مزدوج. يذيب الواقي وأوساخ المختبر.</div></div><div class="prod-price">٩٠-١٣٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🔄</div><div class="prod-body"><div class="prod-name">سيروم ريتينول ليلي ⭐</div><div class="prod-brand">RoC Retinol Correxion 0.3%</div><div class="prod-note">يجدد الخلايا ويقضي على التصبغ. ابدأ مرتين أسبوعياً.</div></div><div class="prod-price">١٠٠-١٥٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🌙</div><div class="prod-body"><div class="prod-name">مرطب كريم ليلي</div><div class="prod-brand">CeraVe Moisturizing Cream</div><div class="prod-note">يصلح الحاجز الجلدي ويرطب طوال الليل.</div></div><div class="prod-price">٥٠-٨٠ ر</div></div>
+
+    <div class="divider"></div>
+    <div class="sec-label">الجسم</div>
+    <div class="prod-card"><div class="prod-icon">🧴</div><div class="prod-body"><div class="prod-name">لوشن جسم مركّز ⭐</div><div class="prod-brand">Vaseline Intensive Care Deep Restore Lotion</div><div class="prod-note">يتمدد بالفرك بين اليدين ويغطي مساحة كبيرة. لا يتقطر، لا يثقل. طبّقه مباشرة بعد الاستحمام والجسم نصف مبلل.</div></div><div class="prod-price">٣٠-٥٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🌿</div><div class="prod-body"><div class="prod-name">زيت الجسم الجاف</div><div class="prod-brand">Neutrogena Body Oil Light Sesame Formula</div><div class="prod-note">بديل للوشن في الشتاء. ٣-٤ مضخات، يفرك بين اليدين ويطلس من أعلى لأسفل. يمتص خلال ٣٠ ثانية بدون دهونة.</div></div><div class="prod-price">٥٠-٧٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🪒</div><div class="prod-body"><div class="prod-name">بلسم ما بعد الحلاقة</div><div class="prod-brand">Nivea Men Sensitive Post Shave Balm</div><div class="prod-note">للذقن والجسم بعد الحلاقة. يهدئ الحساسية والاحمرار ويرطب. لا كحول فيه.</div></div><div class="prod-price">٣٥-٥٠ ر</div></div>
+
+    <div class="divider"></div>
+    <div class="sec-label">الشعر</div>
+    <div class="prod-card"><div class="prod-icon">🧴</div><div class="prod-body"><div class="prod-name">شامبو قشرة وتساقط ⭐</div><div class="prod-brand">Nizoral Anti-Dandruff Shampoo 1% Ketoconazole</div><div class="prod-note">الأفضل طبياً للقشرة والتساقط. Ketoconazole يقضي على الفطريات المسببة للقشرة. مرتين أسبوعياً فقط.</div></div><div class="prod-price">٦٠-٩٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">💧</div><div class="prod-body"><div class="prod-name">شامبو يومي خفيف</div><div class="prod-brand">Dove Men+Care Fortifying Shampoo</div><div class="prod-note">باقي أيام الأسبوع. يغذي الفروة ويقوي الشعر بدون تجفيف.</div></div><div class="prod-price">٣٠-٤٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">🌱</div><div class="prod-body"><div class="prod-name">سيروم فروة الرأس ⭐</div><div class="prod-brand">The Ordinary Multi-Peptide Serum for Hair Density</div><div class="prod-note">يطبق على الفروة يومياً لا على الشعر. يغذي بصيلات الشعر ويبطئ التساقط. لا يوسخ الوسادة لأنه يمتص بالكامل.</div></div><div class="prod-price">٨٠-١٢٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">💊</div><div class="prod-body"><div class="prod-name">رغوة Minoxidil 5%</div><div class="prod-brand">Rogaine / Kirkland Minoxidil 5% Foam</div><div class="prod-note">للتساقط من الوسط في عمر ٤٠. يطبق على الفروة الجافة مرتين يومياً. الأكثر فعالية طبياً لـ Male Pattern Baldness.</div></div><div class="prod-price">١٢٠-٢٠٠ ر</div></div>
+
+    <div class="divider"></div>
+    <div class="sec-label">أسبوعياً</div>
+    <div class="prod-card"><div class="prod-icon">🌋</div><div class="prod-body"><div class="prod-name">قناع الطين البركاني</div><div class="prod-brand">Innisfree Super Volcanic Pore Clay Mask</div><div class="prod-note">مرتين أسبوعياً. يمتص الزهم ويضيق المسام.</div></div><div class="prod-price">٧٠-١٠٠ ر</div></div>
+    <div class="prod-card"><div class="prod-icon">⚗️</div><div class="prod-body"><div class="prod-name">مقشر AHA/BHA</div><div class="prod-brand">The Ordinary Peeling Solution</div><div class="prod-note">مرة واحدة أسبوعياً ليلاً. يسرع توحيد اللون.</div></div><div class="prod-price">٤٠-٦٠ ر</div></div>
+
+  </div>
+
+  <!-- ======================== PAGE: SUPPLEMENTS ======================== -->
+  <div class="page" id="pg-sups">
+
+    <div class="info" style="margin-bottom:14px;">
+      <strong>لماذا هذه المكملات تحديداً لك؟</strong><br>
+      ٩ ساعات مختبر بلا شمس + عمر ٤٠ + تساقط شعر + بشرة دهنية = تحتاج دعماً من الداخل لتسريع نتائج الروتين الخارجي.
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">☀️</div><div><div class="sup-name">فيتامين D3 + K2</div><div class="sup-dose">5000 IU يومياً مع الأكل — الأولوية الأولى</div></div></div>
+      <div class="sup-why">٩ ساعات مختبر بلا شمس = نقص شبه مؤكد. D3 ضروري لتجديد خلايا الجلد وصحة الشعر. K2 للامتصاص.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">🐟</div><div><div class="sup-name">أوميغا 3 — زيت السمك</div><div class="sup-dose">2000-3000 mg يومياً مع الأكل</div></div></div>
+      <div class="sup-why">يقوي حاجز الجلد ويقلل الالتهاب. يدعم نمو الشعر ويقلل التساقط. مفيد خاصة في جو الجبل الجاف.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">💊</div><div><div class="sup-name">كولاجين هيدروليزد + فيتامين C</div><div class="sup-dose">٥-١٠ g يومياً صباحاً</div></div></div>
+      <div class="sup-why">يحسن مرونة وإشراق البشرة ويدعم بصيلات الشعر. التأثير يبدأ بعد ٨-١٢ أسبوع.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">🌿</div><div><div class="sup-name">زنك Zinc Picolinate</div><div class="sup-dose">٣٠ mg يومياً مع العشاء</div></div></div>
+      <div class="sup-why">ينظم الزهم ويدعم إصلاح الجلد. مهم جداً لصحة بصيلات الشعر ومنع التساقط.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">💈</div><div><div class="sup-name">بيوتين Biotin</div><div class="sup-dose">5000-10000 mcg يومياً صباحاً</div></div></div>
+      <div class="sup-why">مفتاح قوة الشعر والأظافر. يغذي بصيلات الشعر ويقلل التساقط. تأثير ملحوظ بعد ٣ أشهر.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">🍇</div><div><div class="sup-name">Glutathione — للإشراق السريع</div><div class="sup-dose">٥٠٠ mg يومياً صباحاً</div></div></div>
+      <div class="sup-why">المبيّض الداخلي الأقوى. يقلل الميلانين ويشرق البشرة. نتائج خلال ٤-٨ أسابيع.</div>
+    </div>
+
+    <div class="sup-card">
+      <div class="sup-head"><div class="sup-emoji">🧬</div><div><div class="sup-name">Saw Palmetto — لتساقط الشعر</div><div class="sup-dose">٣٢٠ mg يومياً مع الأكل</div></div></div>
+      <div class="sup-why">يثبط DHT المسبب الرئيسي لـ Male Pattern Baldness في عمر ٤٠. يعمل بالتوازي مع Minoxidil لنتائج أفضل.</div>
+    </div>
+
+    <div class="warn">⚠️ استشر طبيباً قبل الجلوتاثيون و Saw Palmetto. باقي المكملات آمنة بالجرعات المذكورة للشخص السليم.</div>
+
+  </div>
+
+  <!-- ======================== PAGE: WEEK OVERVIEW ======================== -->
+  <div class="page" id="pg-week">
+
+    <div class="sec-label" style="margin-bottom:12px;">نظرة عامة على الأسبوع</div>
+
+    <div class="week-grid">
+      <div class="wday-card" onclick="setDayFromWeek('sun')">
+        <div class="wday-name">الأحد</div>
+        <div class="wday-steps">روتين عادي</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span><span class="wday-tag tag-hair">شعر</span></div>
+      </div>
+      <div class="wday-card special" onclick="setDayFromWeek('mon')">
+        <div class="wday-name">الاثنين ✂️</div>
+        <div class="wday-steps">حلاقة كاملة</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span><span class="wday-tag tag-hair">شعر</span><span class="wday-tag tag-special">حلاقة</span></div>
+      </div>
+      <div class="wday-card" onclick="setDayFromWeek('tue')">
+        <div class="wday-name">الثلاثاء</div>
+        <div class="wday-steps">قناع طين</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span></div>
+      </div>
+      <div class="wday-card" onclick="setDayFromWeek('wed')">
+        <div class="wday-name">الأربعاء</div>
+        <div class="wday-steps">روتين عادي</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span></div>
+      </div>
+      <div class="wday-card" onclick="setDayFromWeek('thu')">
+        <div class="wday-name">الخميس</div>
+        <div class="wday-steps">مقشر AHA/BHA</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span></div>
+      </div>
+      <div class="wday-card special" onclick="setDayFromWeek('fri')">
+        <div class="wday-name">الجمعة 🚿</div>
+        <div class="wday-steps">استحمام + عناية</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span><span class="wday-tag tag-hair">شعر</span><span class="wday-tag tag-fri">حمام</span></div>
+      </div>
+      <div class="wday-card" onclick="setDayFromWeek('sat')">
+        <div class="wday-name">السبت</div>
+        <div class="wday-steps">روتين عادي</div>
+        <div class="wday-tags"><span class="wday-tag tag-face">وجه</span><span class="wday-tag tag-body">جسم</span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-label">جدول النتائج</div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);">
+      <div class="tl-item">
+        <div class="tl-dot">١</div>
+        <div><div class="tl-week">أسبوع ١-٢</div><div class="tl-title">نظافة وترطيب ✓</div><div class="tl-desc">البشرة أنظف وأكثر ترطيباً. الدهونة تقل. فرق في الملمس.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">٢</div>
+        <div><div class="tl-week">أسبوع ٣-٤</div><div class="tl-title">أول إشراق حقيقي 🌟</div><div class="tl-desc">فيتامين C والتونر يبدآن العمل. اللون أكثر انتظاماً. التصبغ يبدأ يتلاشى.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">٣</div>
+        <div><div class="tl-week">أسبوع ٥-٨</div><div class="tl-title">ريتينول + مكملات 💪</div><div class="tl-desc">البقع الداكنة تخف. الشعر يبدأ يقوى. Minoxidil يبدأ تأثيره.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">٤</div>
+        <div><div class="tl-week">أسبوع ٩-١٢</div><div class="tl-title">النتيجة الكاملة 👑</div><div class="tl-desc">لون موحد، إشراق طبيعي، شعر أقل تساقطاً. مظهر مختلف تماماً.</div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-label">التكلفة الإجمالية</div>
+    <div class="cost-tbl">
+      <div class="cost-row"><span class="cost-lbl">منتجات الوجه</span><span class="cost-val">٥٠٠-٧٠٠ ر</span></div>
+      <div class="cost-row"><span class="cost-lbl">منتجات الجسم والشعر</span><span class="cost-val">٣٠٠-٥٠٠ ر</span></div>
+      <div class="cost-row"><span class="cost-lbl">المكملات (شهرياً)</span><span class="cost-val">٤٠٠-٦٠٠ ر</span></div>
+      <div class="cost-row total"><span class="cost-lbl">الإجمالي للبداية</span><span class="cost-val">١٢٠٠-١٨٠٠ ر</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('today',this)">
+    <span class="nav-icon">📋</span><span class="nav-label">اليوم</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('products',this)">
+    <span class="nav-icon">🧴</span><span class="nav-label">المنتجات</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('sups',this)">
+    <span class="nav-icon">💊</span><span class="nav-label">المكملات</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('week',this)">
+    <span class="nav-icon">📅</span><span class="nav-label">الأسبوع</span>
+  </button>
+</div>
+
+<script>
+// ===================== DATA =====================
+const DAYS_AR = { sun:'الأحد', mon:'الاثنين', tue:'الثلاثاء', wed:'الأربعاء', thu:'الخميس', fri:'الجمعة', sat:'السبت' };
+
+// Steps per day type
+const ROUTINES = {
+  // Normal day
+  normal: [
+    { id:'am1', type:'am', tag:'الصباح', title:'غسول الوجه', product:'CeraVe Foaming Facial Cleanser', desc:'ماء فاتر، مسج دائري ٦٠ ثانية، شطف بماء بارد.' },
+    { id:'am2', type:'am', tag:'الصباح', title:'تونر Glow', product:'Pixi Glow Tonic 5%', desc:'قطنة خفيفة على الوجه. انتظر دقيقة.' },
+    { id:'am3', type:'am', tag:'الصباح ⭐', title:'سيروم فيتامين C', product:'L\'Oréal Revitalift 12%', desc:'٣-٤ قطرات، تدليك لأعلى. الأهم في الخطة.' },
+    { id:'am4', type:'am', tag:'الصباح', title:'مرطب جل نهاري', product:'Neutrogena Hydro Boost Water Gel', desc:'كمية حبة العدس. خفيف، لا يسبب دهونة.' },
+    { id:'am5', type:'am', tag:'الصباح 🛡️', title:'واقي شمس SPF50+', product:'La Roche-Posay Anthelios UVMune 400', desc:'حتى داخل المختبر. يحمي من الإضاءة الفلورية.' },
+    { id:'am6', type:'hair', tag:'الشعر — صباحاً', title:'سيروم فروة الرأس', product:'The Ordinary Multi-Peptide Hair Serum', desc:'على الفروة الجافة فقط، لا على الشعر. يمتص كاملاً لا يوسخ الوسادة.' },
+    { id:'am7', type:'hair', tag:'الشعر — صباحاً', title:'Minoxidil 5% Foam', product:'Rogaine / Kirkland 5% Foam', desc:'نصف غطاء على فروة الرأس الجافة قبل الخروج. انتظر ٤ ساعات قبل الاستحمام.' },
+    { id:'pm1', type:'pm', tag:'المساء', title:'غسول مزدوج', product:'Banila Co Balm ← CeraVe Foaming', desc:'الزيت يذيب الواقي أولاً، ثم الغسول. ضروري بعد ٩ ساعات مختبر.' },
+    { id:'pm2', type:'pm', tag:'المساء ⭐', title:'سيروم ريتينول', product:'RoC Retinol Correxion 0.3%', desc:'مرتين أسبوعياً في البداية. يجدد الخلايا ويقضي على التصبغ.' },
+    { id:'pm3', type:'pm', tag:'المساء', title:'مرطب كريم ليلي', product:'CeraVe Moisturizing Cream', desc:'يصلح الحاجز الجلدي طوال الليل.' },
+    { id:'pm4', type:'hair', tag:'الشعر — ليلاً', title:'Minoxidil الجرعة الثانية', product:'Rogaine / Kirkland 5% Foam', desc:'نصف غطاء على الفروة الجافة قبل النوم.' },
+    { id:'body1', type:'body', tag:'الجسم', title:'لوشن الجسم المركّز', product:'Vaseline Intensive Care Deep Restore', desc:'فرك بين اليدين ثم طلس من الكتف لأسفل. طبّقه والجسم نصف مبلل لنتيجة أفضل.' },
+  ],
+
+  // Monday — full shave day
+  mon: [
+    { id:'am1', type:'am', tag:'الصباح', title:'غسول الوجه', product:'CeraVe Foaming Facial Cleanser', desc:'ماء فاتر، مسج دائري ٦٠ ثانية، شطف بماء بارد.' },
+    { id:'am2', type:'am', tag:'الصباح', title:'تونر Glow', product:'Pixi Glow Tonic 5%', desc:'قطنة خفيفة على الوجه.' },
+    { id:'am3', type:'am', tag:'الصباح ⭐', title:'سيروم فيتامين C', product:'L\'Oréal Revitalift 12%', desc:'٣-٤ قطرات، تدليك لأعلى.' },
+    { id:'am4', type:'am', tag:'الصباح', title:'مرطب جل نهاري', product:'Neutrogena Hydro Boost Water Gel', desc:'كمية حبة العدس.' },
+    { id:'am5', type:'am', tag:'الصباح', title:'واقي شمس SPF50+', product:'La Roche-Posay Anthelios UVMune 400', desc:'حتى داخل المختبر.' },
+    { id:'am6', type:'hair', tag:'الشعر', title:'Minoxidil صباحاً', product:'Rogaine 5% Foam', desc:'نصف غطاء على الفروة. ثم يمشط الشعر بطريقة عادية.' },
+    { id:'pm1', type:'mon', tag:'✂️ حلاقة الرأس والذقن', title:'حلاقة الرأس مدرج', product:'ماكينة الحلاقة المفضلة', desc:'بعد الانتهاء: ماء بارد على فروة الرأس ثم سيروم الفروة.' },
+    { id:'pm2', type:'mon', tag:'✂️ بعد الحلاقة', title:'بلسم ما بعد الحلاقة', product:'Nivea Men Sensitive Post Shave Balm', desc:'على الذقن مباشرة بعد الحلاقة. يهدئ الجلد ويرطبه.' },
+    { id:'pm3', type:'mon', tag:'🚿 بعد العشاء', title:'استحمام + حلاقة العانة والإبطين', product:'شامبو Nizoral اليوم', desc:'اليوم استخدم Nizoral لمكافحة القشرة والتساقط. انتظر ٥ دقائق قبل الشطف.' },
+    { id:'pm4', type:'body', tag:'الجسم بعد الاستحمام', title:'لوشن الجسم الكامل', product:'Vaseline Intensive Care Deep Restore', desc:'فرك بين اليدين ثم طلس من الكتف لأسفل والجسم نصف مبلل. يغطي الجسم كاملاً.' },
+    { id:'pm5', type:'body', tag:'مناطق حلاقة الجسم', title:'بلسم ما بعد الحلاقة — الجسم', product:'Nivea Men Sensitive Post Shave Balm', desc:'على مناطق العانة والإبطين بعد الحلاقة. يهدئ الحساسية والاحمرار.' },
+    { id:'pm6', type:'pm', tag:'المساء', title:'غسول مزدوج', product:'Banila Co Balm ← CeraVe Foaming', desc:'مزدوج بعد يوم المختبر.' },
+    { id:'pm7', type:'pm', tag:'المساء', title:'مرطب كريم ليلي', product:'CeraVe Moisturizing Cream', desc:'اليوم بدون ريتينول — جلد بعد حلاقة يحتاج راحة.' },
+    { id:'pm8', type:'hair', tag:'الشعر — ليلاً', title:'سيروم فروة الرأس', product:'The Ordinary Multi-Peptide Serum', desc:'على الفروة النظيفة الجديدة بعد الحلاقة. أفضل امتصاص.' },
+    { id:'pm9', type:'hair', tag:'الشعر — ليلاً', title:'Minoxidil ليلاً', product:'Rogaine 5% Foam', desc:'نصف غطاء على فروة الرأس الجافة.' },
+  ],
+
+  // Friday — shower day
+  fri: [
+    { id:'am1', type:'am', tag:'الصباح', title:'غسول الوجه', product:'CeraVe Foaming Facial Cleanser', desc:'ماء فاتر، مسج دائري.' },
+    { id:'am2', type:'am', tag:'الصباح ⭐', title:'سيروم فيتامين C', product:'L\'Oréal Revitalift 12%', desc:'٣-٤ قطرات على وجه نظيف.' },
+    { id:'am3', type:'am', tag:'الصباح', title:'مرطب نهاري + واقي', product:'Neutrogena Hydro Boost + La Roche-Posay SPF50', desc:'اليوم الجمعة، لكن إذا خرجت لا تنسَ الواقي.' },
+    { id:'am4', type:'hair', tag:'الشعر', title:'Minoxidil صباحاً', product:'Rogaine 5% Foam', desc:'على الفروة الجافة.' },
+    { id:'fri1', type:'fri', tag:'🚿 استحمام الجمعة', title:'قناع شعر مغذي قبل الاستحمام', product:'Garnier Ultra Doux Honey Hair Mask', desc:'١٥-٢٠ دقيقة على الشعر الجاف قبل الدخول للحمام ثم اشطف بالشامبو.' },
+    { id:'fri2', type:'fri', tag:'🚿 في الحمام', title:'شامبو Nizoral', product:'Nizoral 1% Ketoconazole Shampoo', desc:'الجمعة من أيام Nizoral. مسج جيد، انتظر ٥ دقائق ثم اشطف.' },
+    { id:'fri3', type:'fri', tag:'🚿 في الحمام', title:'مقشر جسم', product:'أي مقشر بحبيبات ناعمة أو قفاز الكيس', desc:'مرة أسبوعياً. يزيل الخلايا الميتة ويجعل اللوشن يمتص أفضل.' },
+    { id:'fri4', type:'body', tag:'بعد الاستحمام', title:'لوشن الجسم الكامل', product:'Vaseline Intensive Care أو Neutrogena Body Oil', desc:'والجسم نصف مبلل. فرك بين اليدين، طلس من أعلى لأسفل كاملاً.' },
+    { id:'pm1', type:'pm', tag:'المساء', title:'غسول مزدوج', product:'Banila Co Balm ← CeraVe Foaming', desc:'تنظيف كامل.' },
+    { id:'pm2', type:'pm', tag:'المساء ⭐', title:'سيروم ريتينول', product:'RoC Retinol Correxion 0.3%', desc:'الجمعة ليلة مناسبة للريتينول.' },
+    { id:'pm3', type:'pm', tag:'المساء', title:'مرطب كريم ليلي', product:'CeraVe Moisturizing Cream', desc:'ترطيب عميق ليلي.' },
+    { id:'pm4', type:'hair', tag:'الشعر — ليلاً', title:'سيروم فروة الرأس + Minoxidil', product:'The Ordinary Serum ← ثم Rogaine Foam', desc:'سيروم الفروة أولاً، انتظر ٥ دقائق، ثم Minoxidil.' },
+  ],
+
+  // Tuesday/Thursday — weekly treatment
+  tue_thu: [
+    { id:'am1', type:'am', tag:'الصباح', title:'غسول الوجه', product:'CeraVe Foaming Facial Cleanser', desc:'ماء فاتر، مسج دائري ٦٠ ثانية.' },
+    { id:'am2', type:'am', tag:'الصباح', title:'تونر + فيتامين C + مرطب + واقي', product:'Pixi ← L\'Oréal ← Neutrogena ← La Roche-Posay', desc:'الروتين الصباحي الكامل.' },
+    { id:'am3', type:'hair', tag:'الشعر', title:'Minoxidil صباحاً', product:'Rogaine 5% Foam', desc:'نصف غطاء على الفروة.' },
+    { id:'wk1', type:'wk', tag:'📅 أسبوعياً — مساءً', title:'قناع الطين البركاني', product:'Innisfree Super Volcanic Pore Clay Mask', desc:'١٠ دقائق على الوجه. يمتص الزهم ويضيق المسام.' },
+    { id:'pm1', type:'pm', tag:'المساء', title:'غسول مزدوج', product:'Banila Co Balm ← CeraVe Foaming', desc:'بعد إزالة القناع.' },
+    { id:'pm2', type:'pm', tag:'المساء', title:'مرطب كريم ليلي', product:'CeraVe Moisturizing Cream', desc:'ترطيب الليل.' },
+    { id:'pm3', type:'hair', tag:'الشعر — ليلاً', title:'سيروم فروة + Minoxidil', product:'The Ordinary Serum ← Rogaine Foam', desc:'سيروم ثم Minoxidil على الفروة الجافة.' },
+    { id:'body1', type:'body', tag:'الجسم', title:'لوشن الجسم', product:'Vaseline Intensive Care Deep Restore', desc:'بعد الاستحمام، فرك بين اليدين ثم طلس كامل الجسم.' },
+  ],
+};
+
+// Day to routine mapping
+const DAY_ROUTINE = {
+  sun: 'normal', mon: 'mon', tue: 'tue_thu',
+  wed: 'normal', thu: 'tue_thu', fri: 'fri', sat: 'normal'
+};
+
+let currentDay = '';
+let todayProgress = {};
+
+function getDayKey() {
+  const d = ['sun','mon','tue','wed','thu','fri','sat'];
+  return d[new Date().getDay()];
+}
+
+function toAr(n) {
+  return String(n).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function renderRoutine(day) {
+  const rKey = DAY_ROUTINE[day];
+  const steps = ROUTINES[rKey];
+  const container = document.getElementById('routine-content');
+  if (!container) return;
+
+  // load saved progress for this day
+  const saved = JSON.parse(localStorage.getItem('skincare_day_' + day) || '{}');
+  const todaySaved = saved.date === new Date().toDateString() ? saved.done : {};
+
+  let html = '';
+  let lastSection = '';
+
+  steps.forEach((s, i) => {
+    const sec = s.type;
+    if (sec !== lastSection) {
+      const hdrs = {
+        am: { cls:'am', icon:'🌅', title:'الروتين الصباحي', sub:'قبل المغادرة للمختبر' },
+        pm: { cls:'pm', icon:'🌙', title:'الروتين المسائي', sub:'بعد العودة من المختبر' },
+        body: { cls:'body', icon:'🧴', title:'الجسم', sub:'بعد الاستحمام' },
+        hair: { cls:'hair', icon:'💈', title:'الشعر والفروة', sub:'صباحاً ومساءً' },
+        wk: { cls:'wk', icon:'📅', title:'عناية أسبوعية', sub:'الثلاثاء والخميس' },
+        mon: { cls:'mon', icon:'✂️', title:'يوم الحلاقة — الاثنين', sub:'بعد العشاء' },
+        fri: { cls:'fri', icon:'🚿', title:'استحمام الجمعة', sub:'عناية خاصة' },
+      };
+      const h = hdrs[sec] || hdrs.am;
+      if (lastSection !== '') html += '<div class="divider"></div>';
+      html += `<div class="sec-hdr ${h.cls}"><div class="sec-hdr-icon">${h.icon}</div><div><div class="sec-hdr-title">${h.title}</div><div class="sec-hdr-time">${h.sub}</div></div></div>`;
+      lastSection = sec;
+    }
+    const done = !!todaySaved[s.id];
+    html += `<div class="step ${s.type}${done?' done':''}" data-id="${s.id}" onclick="toggleStep(this,'${day}')">
+      <div class="step-num">${toAr(i+1)}</div>
+      <div class="step-body">
+        <div class="step-tag">${s.tag}</div>
+        <div class="step-title">${s.title}</div>
+        <div class="step-product">${s.product}</div>
+        <div class="step-desc">${s.desc}</div>
+      </div>
+      <div class="check-circle"><span class="check-tick">✓</span></div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+  updateProgress(day);
+}
+
+function toggleStep(el, day) {
+  const id = el.dataset.id;
+  el.classList.toggle('done');
+  saveProgress(day);
+  updateProgress(day);
+}
+
+function saveProgress(day) {
+  const steps = document.querySelectorAll('#routine-content .step');
+  const done = {};
+  steps.forEach(s => { if(s.classList.contains('done')) done[s.dataset.id] = true; });
+  localStorage.setItem('skincare_day_' + day, JSON.stringify({ date: new Date().toDateString(), done }));
+}
+
+function updateProgress(day) {
+  const steps = document.querySelectorAll('#routine-content .step');
+  const total = steps.length;
+  const doneCount = document.querySelectorAll('#routine-content .step.done').length;
+  const pct = total ? Math.round(doneCount/total*100) : 0;
+  const fill = document.getElementById('prog-fill');
+  const txt = document.getElementById('prog-txt');
+  if (fill) fill.style.width = pct + '%';
+  if (txt) txt.textContent = toAr(doneCount) + ' من ' + toAr(total) + ' خطوات';
+}
+
+function setDay(day, el) {
+  currentDay = day;
+  document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderRoutine(day);
+  // switch to today page
+  showPage('today', document.querySelector('.nav-btn'));
+}
+
+function setDayFromWeek(day) {
+  const pills = document.querySelectorAll('.day-pill');
+  const map = { sun:0, mon:1, tue:2, wed:3, thu:4, fri:5, sat:6 };
+  pills.forEach(p => p.classList.remove('active'));
+  pills[map[day]]?.classList.add('active');
+  currentDay = day;
+  renderRoutine(day);
+  showPage('today', document.querySelectorAll('.nav-btn')[0]);
+}
+
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pg-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Init: set today
+const today = getDayKey();
+currentDay = today;
+const dayMap = { sun:0, mon:1, tue:2, wed:3, thu:4, fri:5, sat:6 };
+const pills = document.querySelectorAll('.day-pill');
+pills[dayMap[today]]?.classList.add('active');
+renderRoutine(today);
+</script>
+</body>
+</html>
