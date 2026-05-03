@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="تطبيق روتين سعد للعناية الجلدية - بشرة مختلطة داكنة">
+  <meta name="author" content="سعد">
+  <title>My DermaCare | روتين سعد</title>
+  <link rel="manifest" href="data:application/json,{}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --surface: rgba(255, 255, 255, 0.9);
+      --surface2: #ffffff;
+      --surface3: #f1f5f9;
+      --border: rgba(0, 0, 0, 0.06);
+      --border2: rgba(0, 0, 0, 0.12);
+      --gold: #b8860b;
+      --gold2: #daa520;
+      --gold-dim: rgba(184, 134, 11, 0.1);
+      --teal: #0d9488;
+      --teal-dim: rgba(13, 148, 136, 0.08);
+      --rose: #e11d48;
+      --rose-dim: rgba(225, 29, 72, 0.08);
+      --lavender: #7c3aed;
+      --lavender-dim: rgba(124, 58, 237, 0.08);
+      --sky: #0284c7;
+      --sky-dim: rgba(2, 132, 199, 0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22, 163, 74, 0.08);
+      --amber: #d97706;
+      --amber-dim: rgba(217, 119, 6, 0.08);
+      --text: #1e293b;
+      --text2: #475569;
+      --text3: #94a3b8;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      max-width: 530px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 110;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1e293b;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .header-title i {
+      color: var(--gold);
+      font-size: 1.3rem;
+    }
+    .header-sub {
+      font-size: 10px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: -2px;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .header-sub .skin-tag {
+      background: var(--gold-dim);
+      border: 1px solid rgba(184, 134, 11, 0.25);
+      border-radius: 100px;
+      padding: 2px 8px;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .header-time {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      color: var(--text2);
+      direction: ltr;
+    }
+    .header-day {
+      font-size: 11px;
+      color: var(--teal);
+      text-align: left;
+      font-weight: 600;
+    }
+
+    /* MAIN GRID */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 20px 16px;
+      justify-items: center;
+    }
+
+    .icon-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+      aspect-ratio: 1 / 0.9;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    .icon-card:active {
+      transform: scale(0.96);
+      background: #f8fafc;
+    }
+
+    .icon-card i {
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 1;
+      transition: all 0.2s;
+    }
+
+    .icon-card span {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+    .icon-card .sub-hint {
+      font-size: 9px;
+      color: var(--text3);
+      font-weight: 500;
+    }
+
+    /* Color variants */
+    .icon-morning i { color: var(--gold); }
+    .icon-evening i { color: var(--lavender); }
+    .icon-wudu i { color: var(--teal); }
+    .icon-ghusl i { color: var(--sky); }
+    .icon-preWork i { color: var(--amber); }
+    .icon-postWork i { color: var(--rose); }
+    .icon-shopping i { color: var(--green); }
+    .icon-schedule i { color: var(--teal); }
+    .icon-conflicts i { color: var(--rose); }
+
+    /* ROUTINE PANEL */
+    .routine-panel {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 0 16px 20px;
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+      display: none;
+      animation: fadeSlide 0.3s ease;
+    }
+    .routine-panel.active {
+      display: block;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .close-panel {
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .close-panel:hover {
+      color: #000;
+      border-color: #000;
+    }
+
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .step-item {
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-weight: 500;
+      color: var(--text);
+      border: 1px solid #e2e8f0;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .step-item i {
+      color: var(--gold);
+      width: 20px;
+      text-align: center;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .step-item .step-prod {
+      display: block;
+      font-size: 10px;
+      color: var(--text2);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .panel-footer {
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 10px;
+      color: var(--text3);
+      text-align: center;
+    }
+
+    /* FOOTER */
+    .app-footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 10px;
+      color: var(--text3);
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .app-footer strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+
+    @media (max-width: 400px) {
+      .dashboard-grid { gap: 8px; padding: 14px 10px; }
+      .icon-card i { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="header">
+      <div>
+        <div class="header-title"><i class="fas fa-crown"></i>روتين سعد ✦</div>
+        <div class="header-sub">
+          <span class="skin-tag">بشرة مختلطة داكنة</span>
+          <span class="skin-tag" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(13,148,136,0.25)">Fitzpatrick IV-V</span>
+        </div>
+      </div>
+      <div>
+        <div class="header-time" id="headerTime">00:00:00</div>
+        <div class="header-day" id="headerDay">—</div>
+      </div>
+    </header>
+
+    <!-- أيقونات الروتين -->
+    <nav class="dashboard-grid" id="iconGrid">
+      <div class="icon-card icon-morning" data-routine="morning">
+        <i class="fas fa-sun"></i>
+        <span>☀️ صباح</span>
+        <span class="sub-hint">استيقاظ</span>
+      </div>
+      <div class="icon-card icon-evening" data-routine="evening">
+        <i class="fas fa-moon"></i>
+        <span>🌙 مساء</span>
+        <span class="sub-hint">قبل النوم</span>
+      </div>
+      <div class="icon-card icon-wudu" data-routine="wudu">
+        <i class="fas fa-hand-holding-water"></i>
+        <span>💧 بعد الوضوء</span>
+      </div>
+      <div class="icon-card icon-ghusl" data-routine="ghusl">
+        <i class="fas fa-shower"></i>
+        <span>🛁 الاغتسال</span>
+        <span class="sub-hint">شعر + جسم</span>
+      </div>
+      <div class="icon-card icon-preWork" data-routine="preWork">
+        <i class="fas fa-briefcase"></i>
+        <span>🏢 قبل الدوام</span>
+      </div>
+      <div class="icon-card icon-postWork" data-routine="postWork">
+        <i class="fas fa-home"></i>
+        <span>🏠 بعد الدوام</span>
+      </div>
+      <div class="icon-card icon-shopping" data-routine="shopping">
+        <i class="fas fa-cart-shopping"></i>
+        <span>🛒 سلة الشراء</span>
+      </div>
+      <div class="icon-card icon-schedule" data-routine="schedule">
+        <i class="fas fa-calendar-week"></i>
+        <span>📅 جدول الأيام</span>
+        <span class="sub-hint">دوام / أوف</span>
+      </div>
+      <div class="icon-card icon-conflicts" data-routine="conflicts">
+        <i class="fas fa-shield-haltered"></i>
+        <span>⚠️ نصائح التعارض</span>
+      </div>
+    </nav>
+
+    <!-- لوحة عرض التفاصيل -->
+    <div id="routineDisplay" class="routine-panel">
+      <div class="panel-header">
+        <div class="panel-title" id="panelTitle"></div>
+        <button class="close-panel" id="closePanel" aria-label="إغلاق"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="routineContent"></div>
+      <div class="panel-footer">© سعد · روتين عناية جلدية متكامل</div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <strong>ملكية فكرية © سعد</strong> · جميع الحقوق محفوظة 2026 · بشرة مختلطة داكنة
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // ========== بيانات الوقت والتاريخ ==========
+      function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('headerTime').textContent = `${h}:${m}:${s}`;
+        const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        document.getElementById('headerDay').textContent = days[now.getDay()];
+      }
+
+      // ========== بيانات الروتينات ==========
+      const routines = {
+        morning: {
+          title: '☀️ روتين الصباح (بعد الاستيقاظ)',
+          steps: [
+            { icon: 'fa-hand-sparkles', text: 'غسول الوجه', product: 'CeraVe Foaming Cleanser — ماء فاتر، 30 ثانية' },
+            { icon: 'fa-droplet', text: 'سيروم النياسيناميد', product: 'The Ordinary Niacinamide 10% + Zinc 1% — ركّز على T-Zone' },
+            { icon: 'fa-fill-drip', text: 'سيروم الهيالورونيك', product: 'The Ordinary Hyaluronic Acid 2% + B5 — وجه رطب' },
+            { icon: 'fa-sparkles', text: 'سيروم التصبغات (اختياري)', product: 'La Roche-Posay Mela B3 Serum — على أماكن البقع' },
+            { icon: 'fa-eye', text: 'كريم العين', product: 'SARA Anti-Wrinkle Eye Cream — نقر بالخنصر' },
+            { icon: 'fa-shield-sun', text: 'مرطب + واقي شمس', product: 'Neutrogena Water in Milk ← ثم ← Genove +50 FPS أو Eucerin SPF 50+' },
+            { icon: 'fa-wind', text: 'مرطب الجسم', product: 'Nivea Non-Greasy Hydrating Lotion — سريع الامتصاص' },
+          ]
+        },
+        evening: {
+          title: '🌙 روتين المساء (قبل النوم)',
+          steps: [
+            { icon: 'fa-soap', text: 'تنظيف مزدوج', product: 'مزيل المكياج/الواقي ← ثم CeraVe Foaming Cleanser' },
+            { icon: 'fa-eye', text: 'كريم العين أولاً', product: 'SARA Anti-Wrinkle Eye Cream — حاجز واقٍ حول العين' },
+            { icon: 'fa-vial', text: 'العلاج الليلي (حسب اليوم)', product: 'ريتينول (3 مرات/أسبوع) أو Mela B3 أو Hyaluronic Acid فقط' },
+            { icon: 'fa-cube', text: 'مرطب ليلي', product: 'CeraVe Moisturizing Cream — كمية صغيرة بحجم الحمصة' },
+            { icon: 'fa-wind', text: 'مرطب الجسم', product: 'Vaseline Verbena Glycerin — للجسم (وليس للوجه)' },
+            { icon: 'fa-spray-can', text: 'كامينوموتو (قبل النوم)', product: 'Kaminomoto Accelerator II — الجرعة الأكبر على فروة جافة' },
+          ]
+        },
+        wudu: {
+          title: '💧 بعد الوضوء',
+          steps: [
+            { icon: 'fa-droplet', text: 'ترطيب فوري', product: 'The Ordinary Hyaluronic Acid 2% + B5 — على بشرة ندية' },
+            { icon: 'fa-eye', text: 'كريم العين', product: 'SARA Anti-Wrinkle Eye Cream — إعادة تطبيق فقط' },
+            { icon: 'fa-ban', text: 'لا تعيد السيروم أو الواقي', product: 'بعد الوضوء: هيالورونيك + كريم عين فقط — لا سيروم ولا واقي شمس' },
+          ]
+        },
+        ghusl: {
+          title: '🛁 بعد الاغتسال',
+          steps: [
+            { icon: 'fa-shower', text: 'شامبو مضاد التساقط', product: 'Genove Champu Anticaida — دلّك فروة الرأس دقيقتين واتركه 3 دقائق' },
+            { icon: 'fa-spray-can', text: 'كامينوموتو (فروة رطبة)', product: 'Kaminomoto Accelerator II — رش على الفروة الرطبة، لا تشطف' },
+            { icon: 'fa-wind', text: 'سيروم الكيراتين', product: 'MORFOSE Keratin Serum — على الفروة والشعر الرطب' },
+            { icon: 'fa-wind', text: 'سيروم الحليب (أطراف)', product: 'Morfose Dairy Milk Care Serum — وسط وأطراف الشعر فقط' },
+            { icon: 'fa-soap', text: 'غسول الوجه', product: 'CeraVe Foaming Cleanser — تنظيف لطيف بعد الترويش' },
+            { icon: 'fa-droplet', text: 'مرطب الوجه', product: 'The Ordinary Hyaluronic Acid 2% + B5 — فقط' },
+            { icon: 'fa-cube', text: 'مرطب الجسم', product: 'Vaseline Ice Cool Hydration أو Nivea Non-Greasy Lotion' },
+          ]
+        },
+        preWork: {
+          title: '🏢 قبل الدوام (07:30 صباحاً)',
+          steps: [
+            { icon: 'fa-sun', text: 'روتين الصباح الكامل', product: 'غسول ← نياسيناميد ← هيالورونيك ← Mela B3 ← كريم عين ← واقي شمس' },
+            { icon: 'fa-shield-sun', text: 'واقي شمس بقوة', product: 'Genove +50 FPS أو Eucerin SPF 50+ — الوجه والرقبة واليدين' },
+            { icon: 'fa-wind', text: 'مرطب جسم سريع', product: 'Nivea Non-Greasy Lotion — لا يترك أثراً دهنياً' },
+            { icon: 'fa-clock', text: 'لا تستخدم ريتينول أو مقشرات', product: 'هذه للاستخدام الليلي فقط — واقي الشمس إلزامي' },
+          ]
+        },
+        postWork: {
+          title: '🏠 بعد الدوام (04:00 مساءً)',
+          steps: [
+            { icon: 'fa-soap', text: 'غسيل الوجه', product: 'CeraVe Foaming Cleanser — إزالة تراكمات النهار والزهم' },
+            { icon: 'fa-droplet', text: 'نياسيناميد + هيالورونيك', product: 'لتجديد البشرة بعد يوم طويل خارج المنزل' },
+            { icon: 'fa-eye', text: 'كريم العين', product: 'SARA Anti-Wrinkle Eye Cream' },
+            { icon: 'fa-cube', text: 'مرطب خفيف', product: 'Neutrogena Water in Milk أو Nivea Soft SPF 15 (داخل البيت)' },
+          ]
+        },
+        shopping: {
+          title: '🛒 سلة إعادة الشراء',
+          steps: [
+            { icon: 'fa-cart-plus', text: 'منظفات', product: 'CeraVe Foaming Cleanser × 2' },
+            { icon: 'fa-cart-plus', text: 'سيرومات أساسية', product: 'The Ordinary Niacinamide, Hyaluronic Acid, La Roche-Posay Retinol B3, Mela B3' },
+            { icon: 'fa-cart-plus', text: 'مرطبات', product: 'CeraVe Moisturizing Cream, Neutrogena Water in Milk, Vaseline Ice Cool' },
+            { icon: 'fa-cart-plus', text: 'حماية شمس', product: 'Genove +50 FPS, Eucerin SPF 50+, Nivea Sun Fluid' },
+            { icon: 'fa-cart-plus', text: 'عين', product: 'SARA Anti-Wrinkle Eye Cream' },
+            { icon: 'fa-cart-plus', text: 'شعر', product: 'Genove Anticaida, Kaminomoto, Morfose Keratin & Milk, Pure Beauty' },
+            { icon: 'fa-cart-plus', text: 'جسم', product: 'Nivea Non-Greasy, Vaseline Verbena Glycerin, Vaseline Ice Cool' },
+          ]
+        },
+        schedule: {
+          title: '📅 جدول الأيام — دوام × أوف',
+          steps: [
+            { icon: 'fa-calendar-check', text: 'أيام الدوام (ثلاثاء - خميس)', product: 'صحوة 07:30 ← روتين PreWork ← رجوع 16:00 ← نوم 02:30' },
+            { icon: 'fa-calendar-day', text: 'أيام الأوف (أحد، اثنين، جمعة، سبت)', product: 'صحوة 14:00 ← روتين صباحي ← خروج ← رجوع ← نوم 04:00' },
+            { icon: 'fa-scissors', text: 'يوم الاثنين — حلاقة', product: 'لا تستخدم Retinol أبداً على الوجه في هذا اليوم' },
+            { icon: 'fa-calendar-plus', text: 'تقشير AHA/BHA الأسبوعي', product: 'مرة واحدة فقط — ليلة الثلاثاء أو الجمعة — 10 دقائق على وجه جاف' },
+            { icon: 'fa-moon', text: 'ليالي الريتينول', product: 'الأحد، الأربعاء، الجمعة (3 مرات/أسبوع) — تجنب يوم الحلاقة' },
+          ]
+        },
+        conflicts: {
+          title: '⚠️ نصائح ذهبية لتجنب التعارض',
+          steps: [
+            { icon: 'fa-ban', text: 'لا تجمع ريتينول + AHA/BHA أبداً', product: 'افصل بينهما 24 ساعة على الأقل — وإلا تهيج شديد' },
+            { icon: 'fa-ban', text: 'فيتامين C نقي + Niacinamide = تهيّج', product: 'بشرتك الداكنة معرضة للتصبغات بعد الالتهاب — تجنب الخلط' },
+            { icon: 'fa-check-circle', text: 'الآمن دائماً مع أي منتج', product: 'Hyaluronic Acid و CeraVe مرطب — لا يتعارضان مع أي شيء' },
+            { icon: 'fa-shield-sun', text: 'واقي الشمس = التزام يومي', product: 'بشرتك Fitzpatrick IV-V تصبغ بسهولة — SPF 50+ كل صباح بدون استثناء' },
+            { icon: 'fa-eye', text: 'كريم العين حاجز واقٍ', product: 'ضعيه قبل السيرومات القوية لحماية محيط العين الحساسة' },
+            { icon: 'fa-temperature-low', text: 'بعد التقشير مباشرة', product: 'لا تستخدم Vaseline Verbena (عطر) على الوجه — استخدم CeraVe فقط' },
+          ]
+        }
+      };
+
+      // ========== DOM elements ==========
+      const displayPanel = document.getElementById('routineDisplay');
+      const routineContent = document.getElementById('routineContent');
+      const panelTitle = document.getElementById('panelTitle');
+      const closePanel = document.getElementById('closePanel');
+      const iconGrid = document.getElementById('iconGrid');
+
+      // ========== Render routine ==========
+      function renderRoutine(routineKey) {
+        const routine = routines[routineKey];
+        if (!routine) return;
+
+        panelTitle.innerHTML = routine.title;
+        let html = '<ul class="step-list">';
+        routine.steps.forEach(step => {
+          html += `
+            <li class="step-item">
+              <i class="fas ${step.icon}"></i>
+              <div>
+                ${step.text}
+                <span class="step-prod">🧴 ${step.product}</span>
+              </div>
+            </li>`;
+        });
+        html += '</ul>';
+        routineContent.innerHTML = html;
+        displayPanel.classList.add('active');
+        displayPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // ========== Event listeners ==========
+      iconGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.icon-card');
+        if (!card) return;
+        const routineKey = card.dataset.routine;
+        if (routineKey) renderRoutine(routineKey);
+      });
+
+      closePanel.addEventListener('click', () => {
+        displayPanel.classList.remove('active');
+      });
+
+      // ========== PWA Install ==========
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+
+      // ========== Service Worker ==========
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+      }
+
+      // ========== Init ==========
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      console.log('🧬 تطبيق روتين سعد للعناية الجلدية | بشرة مختلطة داكنة | Fitzpatrick IV-V');
+      console.log('© جميع الحقوق محفوظة لسعد');
+    })();
+  </script>
+</body>
+</html>
